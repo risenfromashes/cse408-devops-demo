@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: development
+    environment:
+      - VITE_API_URL=http://server:5000/api/todos
+      - VITE_USE_MOCK_API=false
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - todo-test-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: development
+    environment:
+      - NODE_ENV=test
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=todo_test
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - todo-test-network
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=todo_test
+    tmpfs:
+      - /var/lib/postgresql/data # Use in-memory storage for tests
+    networks:
+      - todo-test-network
+
+  playwright:
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    depends_on:
+      - client
+      - server
+    environment:
+      - BASE_URL=http://client:3000
+      - API_URL=http://server:5000
+    volumes:
+      - ./e2e/tests:/app/tests
+      - ./e2e/test-results:/app/test-results
+      - ./e2e/playwright-report:/app/playwright-report
+    networks:
+      - todo-test-network
+
+networks:
+  todo-test-network:
+    driver: bridge

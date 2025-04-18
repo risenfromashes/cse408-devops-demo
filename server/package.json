@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose --colors",
+    "test": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose --colors --watchAll=false",
     "build": "echo 'No build step needed for JS'",
     "test:docker": "docker-compose -f ../docker-compose.test.yml up --abort-on-container-exit --exit-code-from server-test && docker-compose -f ../docker-compose.test.yml down"
   },

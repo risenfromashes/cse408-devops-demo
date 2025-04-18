@@ -1,0 +1,11 @@
+{
+  "name": "todo-e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for Todo application",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.41.0"
+  }
+}
