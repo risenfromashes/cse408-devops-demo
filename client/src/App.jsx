@@ -10,7 +10,7 @@ const App = () => {
         <div className="container mx-auto max-w-2xl px-4">
           <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-600">
-              Task Manager
+              Task Manager for You
             </span>
           </h1>
           

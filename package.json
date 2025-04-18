@@ -1,0 +1,39 @@
+{
+  "name": "devops-demo",
+  "version": "1.0.0",
+  "description": "Full-stack Todo application with React, Express, and PostgreSQL",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "docker-compose -f docker-compose.prod.yml up --build",
+    "start:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "stop": "docker-compose -f docker-compose.prod.yml down",
+    "stop:dev:": "docker-compose -f docker-compose.dev.yml down",
+    
+    "test:unit": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm test",
+    "test:server": "cd server && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/risenfromashes/devops-demo.git"
+  },
+  "keywords": [
+    "react",
+    "express",
+    "postgresql",
+    "docker",
+    "fullstack",
+    "devops"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+  }
+}

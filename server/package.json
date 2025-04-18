@@ -8,7 +8,7 @@
     "dev": "nodemon src/app.js",
     "test": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose --colors",
     "build": "echo 'No build step needed for JS'",
-    "test:docker": "docker-compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from test && docker-compose -f docker-compose.test.yml down"
+    "test:docker": "docker-compose -f ../docker-compose.test.yml up --abort-on-container-exit --exit-code-from server-test && docker-compose -f ../docker-compose.test.yml down"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -22,6 +22,7 @@
     "jest": "^29.7.0",
     "babel-jest": "^29.7.0",
     "nodemon": "^3.1.9",
+    "sqlite3": "^5.1.7",
     "supertest": "^7.0.0"
   },
   "engines": {

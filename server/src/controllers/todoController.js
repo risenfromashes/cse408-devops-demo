@@ -3,7 +3,8 @@ import Todo from '../models/todo.js';
 // Create a new todo
 export const createTodo = async (req, res) => {
     try {
-        const { title, completed } = req.body;
+        let { title, completed } = req.body;
+        
         const newTodo = await Todo.create({ title, completed });
         res.status(201).json(newTodo);
     } catch (error) {

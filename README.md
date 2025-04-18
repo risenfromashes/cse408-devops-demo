@@ -5,92 +5,106 @@ This is a full-stack Todo application built with a React frontend, an Express ba
 ## Project Structure
 
 ```
-todo-fullstack
-├── client                # React frontend
-│   ├── public            # Public assets
-│   ├── src               # Source files for React
-│   ├── tailwind.config.js # Tailwind CSS configuration
-│   ├── tsconfig.json     # TypeScript configuration for client
-│   └── package.json      # npm configuration for client
-├── server                # Express backend
-│   ├── src               # Source files for Express
-│   ├── package.json      # npm configuration for server
-│   └── tsconfig.json     # TypeScript configuration for server
-├── .github               # GitHub Actions workflows
-├── docker-compose.dev.yml # Docker Compose for development
+devops-demo/
+├── client/                # React frontend
+│   ├── Dockerfile         # Docker configuration for client
+│   ├── public/            # Public assets
+│   ├── src/               # Source files for React
+│   │   ├── components/    # React components
+│   │   ├── context/       # React context providers
+│   │   ├── hooks/         # Custom React hooks
+│   │   └── services/      # API and mock services
+│   ├── vite.config.js     # Vite configuration
+│   └── package.json       # npm configuration for client
+├── server/                # Express backend
+│   ├── Dockerfile         # Docker configuration for server
+│   ├── src/               # Source files for Express
+│   │   ├── config/        # Configuration files
+│   │   ├── controllers/   # API controllers
+│   │   ├── models/        # Database models
+│   │   ├── routes/        # API routes
+│   │   └── tests/         # Test files
+│   └── package.json       # npm configuration for server
+├── docker-compose.dev.yml  # Docker Compose for development
 ├── docker-compose.prod.yml # Docker Compose for production
-├── Dockerfile.client     # Dockerfile for client
-├── Dockerfile.server     # Dockerfile for server
-├── .env.example          # Example environment variables
-├── .gitignore            # Git ignore file
-└── README.md             # Project documentation
+├── .gitignore             # Git ignore file
+└── README.md              # Project documentation
 ```
 
 ## Features
 
-- Add new todo items with a title and time attribute.
-- Mark todo items as complete using a checkbox.
-- Delete todo items from the list.
-- Responsive design using Tailwind CSS.
-- Unit tests for backend functionality using Jest.
+- Add new todo items with a title
+- Mark todo items as complete using a checkbox
+- Delete todo items from the list
+- Responsive design using Tailwind CSS
+- REST API with Express.js backend
+- PostgreSQL database for data persistence
+- Containerized with Docker for easy development and deployment
+- Support for local development with mock API
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js
+- Node.js and npm
 - Docker and Docker Compose
-- PostgreSQL
+- Git
 
 ### Installation
 
 1. Clone the repository:
    ```
    git clone <repository-url>
-   cd todo-fullstack
+   cd devops-demo
    ```
 
-2. Set up the client:
+### Running with Docker (Recommended)
+
+1. Start the application using Docker Compose:
+   ```
+   docker-compose -f docker-compose.dev.yml up --build
+   ```
+
+2. Access the application:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000/api/todos
+
+### Running Locally (Development)
+
+1. Set up the client:
    ```
    cd client
    npm install
+   npm run dev
    ```
 
-3. Set up the server:
+2. Set up the server:
    ```
    cd server
    npm install
+   npm run dev
    ```
 
-4. Create a `.env` file in the server directory based on the `.env.example` file and configure your database connection.
-
-### Running the Application
-
-- For development, use Docker Compose:
-  ```
-  docker-compose -f docker-compose.dev.yml up
-  ```
-
-- For production, use:
-  ```
-  docker-compose -f docker-compose.prod.yml up
-  ```
+3. By default, the frontend will use the mock API when running locally.
 
 ### Running Tests
 
-To run unit tests for the server, navigate to the server directory and run:
+To run unit tests for the server:
 ```
+cd server
 npm test
 ```
 
-### Deployment
+## Development Modes
 
-The application can be deployed to an Azure VM using the GitHub Actions workflow defined in `.github/workflows/ci-cd.yml`.
+- **Local Development Mode**: When running the client directly with `npm run dev`, it uses a mock API by default for quick development without a backend.
+- **Full Stack Development Mode**: When using Docker Compose, the client connects to the real Express API and PostgreSQL database.
+
+## Environment Configuration
+
+- `VITE_USE_MOCK_API`: Set to `false` to use the real API instead of the mock API
+- `VITE_API_URL`: URL for the API endpoint (default: http://localhost:5000/api/todos)
 
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or features.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.

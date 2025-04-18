@@ -5,7 +5,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+# Changed from 'npm ci' to 'npm install' to generate/update package-lock.json if needed
+RUN npm install
 
 # The volume mapping in docker-compose will override this in dev
 COPY . ./
@@ -23,8 +24,8 @@ WORKDIR /app
 # Copy package files first
 COPY package*.json ./
 
-# Install ALL dependencies (including dev)
-RUN npm ci
+# Changed from 'npm ci' to 'npm install' to ensure dependencies are properly installed
+RUN npm install
 
 # Copy the rest of the app code
 COPY . ./
@@ -40,7 +41,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copy source code
 COPY . ./
