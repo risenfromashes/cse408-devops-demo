@@ -1,0 +1,35 @@
+{
+  "name": "todo-fullstack-server",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose --colors",
+    "build": "echo 'No build step needed for JS'",
+    "test:docker": "docker-compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from test && docker-compose -f docker-compose.test.yml down"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.35.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
+    "jest": "^29.7.0",
+    "babel-jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
+}

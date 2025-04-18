@@ -1,0 +1,54 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_API_URL=http://server:5000/api/todos
+      - VITE_USE_MOCK_API=false  # Explicitly disable mock API in Docker environment
+      - NODE_ENV=development
+    depends_on:
+      - server
+    stdin_open: true # Enables interactive mode
+    tty: true # Allocates a pseudo-TTY
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=todo_dev
+      - DB_LOGGING=true
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=todo_dev
+
+volumes:
+  postgres_data:
