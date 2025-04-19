@@ -10,6 +10,11 @@ yarn-error.log*
 # Testing
 **/coverage/
 **/.nyc_output/
+# Playwright
+**/test-results/
+**/test-results-local/
+**/playwright-report/
+**/playwright/.cache/
 
 # Build files
 **/build/

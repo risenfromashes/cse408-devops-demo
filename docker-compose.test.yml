@@ -11,7 +11,7 @@ services:
       - client
       - server
     networks:
-      - todo-network
+      - todo-test-network
     restart: unless-stopped
 
   client:
@@ -26,7 +26,7 @@ services:
     depends_on:
       - server
     networks:
-      - todo-network
+      - todo-test-network
     restart: unless-stopped
 
   server:
@@ -41,30 +41,50 @@ services:
       - DB_HOST=db
       - DB_USER=user
       - DB_PASSWORD=password
-      - DB_NAME=todo_db
+      - DB_NAME=todo_test_db
       - DB_LOGGING=false
     depends_on:
       - db
     networks:
-      - todo-network
+      - todo-test-network
     restart: unless-stopped
 
   db:
     image: postgres:16-alpine
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_test_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=todo_db
+      - POSTGRES_DB=todo_test_db
     networks:
-      - todo-network
+      - todo-test-network
     restart: unless-stopped
 
+  e2e:
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile
+    depends_on:
+      - nginx
+      - client
+      - server
+      - db
+    environment:
+      - CI=true
+      - BASE_URL=http://nginx
+    volumes:
+      - ./e2e:/tests
+      - ./e2e/playwright-report:/tests/playwright-report
+      - ./e2e/test-results:/tests/test-results
+    networks:
+      - todo-test-network
+    command: npx playwright test
+
 networks:
-  todo-network:
+  todo-test-network:
     driver: bridge
 
 volumes:
-  db_data:
+  db_test_data:
     driver: local

@@ -4,13 +4,10 @@ import * as mockApi from './mockApi';
 // By default, use mock API for local development unless explicitly set to false
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false' && import.meta.env.MODE === 'development';
 
+console.log('VITE_API_URL:', import.meta.env.VITE_API_URL);
 // API base URL handling
 let API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/todos';
 
-// If we're in browser and the URL contains 'server', replace it with 'localhost'
-if (typeof window !== 'undefined' && API_URL.includes('http://server:')) {
-  API_URL = API_URL.replace('http://server:', 'http://localhost:');
-}
 
 // Log which API mode is being used and the API URL for debugging
 console.log(`Using ${USE_MOCK_API ? 'mock' : 'real'} API`);

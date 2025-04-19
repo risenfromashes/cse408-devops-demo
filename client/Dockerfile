@@ -36,6 +36,10 @@ FROM node:20-slim as build
 
 WORKDIR /app
 
+# Add build arguments
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
+
 COPY package*.json ./
 
 # Changed from 'npm ci' to 'npm install' to ensure dependencies are properly installed

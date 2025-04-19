@@ -4,7 +4,6 @@ import Todo from '../models/todo.js';
 export const createTodo = async (req, res) => {
     try {
         let { title, completed } = req.body;
-        
         const newTodo = await Todo.create({ title, completed });
         res.status(201).json(newTodo);
     } catch (error) {
