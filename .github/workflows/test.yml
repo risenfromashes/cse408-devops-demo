@@ -1,7 +1,12 @@
 name: Running tests
 
 on:
-  push
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   unit-tests:
