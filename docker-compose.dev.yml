@@ -38,7 +38,8 @@ services:
       - DB_NAME=todo_dev
       - DB_LOGGING=true
     depends_on:
-      - db
+      - db:
+        condition: service_healthy
 
   db:
     image: postgres:16-alpine
@@ -50,6 +51,12 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=todo_dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d todo_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
 volumes:
   postgres_data:
