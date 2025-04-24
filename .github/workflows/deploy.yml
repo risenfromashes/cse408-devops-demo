@@ -1,0 +1,52 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch: 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.AZURE_VM_SSH_PRIVATE_KEY }}
+      
+      - name: Add Azure VM to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.AZURE_VM_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Set up Docker context for remote host
+        run: |
+          docker context create azure-vm --docker "host=ssh://${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_HOST }}"
+          docker context use azure-vm
+      
+      - name: Deploy with docker-compose
+        run: |
+          docker compose -f docker-compose.prod.yml down || true
+          docker compose -f docker-compose.prod.yml pull
+          docker compose -f docker-compose.prod.yml up --build -d
+      
+      - name: Verify deployment
+        run: |
+          docker compose -f docker-compose.prod.yml ps
+      
+      - name: Reset Docker context
+        if: always()
+        run: |
+          docker context use default
+          docker context rm azure-vm
