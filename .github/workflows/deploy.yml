@@ -37,13 +37,13 @@ jobs:
       
       - name: Deploy with docker-compose
         run: |
-          docker compose -f docker-compose.prod.yml down || true
-          docker compose -f docker-compose.prod.yml pull
-          docker compose -f docker-compose.prod.yml up --build -d
+          docker compose -f docker-compose.deploy.yml down || true
+          docker compose -f docker-compose.deploy.yml pull
+          docker compose -f docker-compose.deploy.yml up --build -d
       
       - name: Verify deployment
         run: |
-          docker compose -f docker-compose.prod.yml ps
+          docker compose -f docker-compose.deploy.yml ps
       
       - name: Reset Docker context
         if: always()
