@@ -38,7 +38,7 @@ services:
       - DB_NAME=todo_dev
       - DB_LOGGING=true
     depends_on:
-      - db:
+      db:
         condition: service_healthy
 
   db:

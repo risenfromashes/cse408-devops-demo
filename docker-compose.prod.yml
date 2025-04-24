@@ -42,7 +42,7 @@ services:
       - DB_NAME=todo_db
       - DB_LOGGING=false
     depends_on:
-      - db:
+      db:
         condition: service_healthy
     networks:
       - todo-network
