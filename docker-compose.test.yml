@@ -74,12 +74,11 @@ services:
       - CI=true
       - BASE_URL=http://nginx
     volumes:
-      - ./e2e:/tests
       - ./e2e/playwright-report:/tests/playwright-report
       - ./e2e/test-results:/tests/test-results
     networks:
       - todo-test-network
-    command: npx playwright test
+    command: npm test
 
 networks:
   todo-test-network:
