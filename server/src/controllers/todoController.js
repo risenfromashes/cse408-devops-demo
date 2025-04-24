@@ -4,6 +4,10 @@ import Todo from '../models/todo.js';
 export const createTodo = async (req, res) => {
     try {
         let { title, completed } = req.body;
+        // if title includes wtf replace with ***
+        if (title.includes('wtf')) {
+            title = title.replace(/wtf/g, '***');
+        }
         const newTodo = await Todo.create({ title, completed });
         res.status(201).json(newTodo);
     } catch (error) {

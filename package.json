@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "start": "docker-compose -f docker-compose.prod.yml up --build",
-    "start:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "dev": "docker-compose -f docker-compose.dev.yml up --build",
     "stop": "docker-compose -f docker-compose.prod.yml down",
-    "stop:dev:": "docker-compose -f docker-compose.dev.yml down",
+    "stop:dev": "docker-compose -f docker-compose.dev.yml down",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "npm run test:client && npm run test:server",
     "test:client": "cd client && npm test",

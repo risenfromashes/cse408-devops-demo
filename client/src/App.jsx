@@ -18,7 +18,7 @@ const App = () => {
           <TodoList />
           
           <div className="text-center mt-8 text-xs text-gray-500">
-            <p>A modern task management application</p>
+            <p>A modern task management SOFTWARE!</p>
           </div>
         </div>
       </div>
