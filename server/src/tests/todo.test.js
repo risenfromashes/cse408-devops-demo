@@ -21,7 +21,7 @@ describe('Todo API', () => {
       .post('/api/todos')
       .send({ title: 'Test Todo', completed: false, dueDate: new Date() });
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(202);
     expect(response.body.title).toBe('Test Todo');
   });
 

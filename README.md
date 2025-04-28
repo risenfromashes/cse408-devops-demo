@@ -175,7 +175,6 @@ npm test
 - `DB_NAME`: PostgreSQL database name
 - `DB_LOGGING`: Enable/disable SQL query logging
 
-
 ## License
 
 This project is licensed under the MIT License.
