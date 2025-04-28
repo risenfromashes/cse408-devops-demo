@@ -2,6 +2,7 @@ import React from 'react';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import { TodoProvider } from './context/TodoContext';
+import { FaGithub } from 'react-icons/fa';
 
 const App = () => {
   return (
@@ -19,6 +20,17 @@ const App = () => {
           
           <div className="text-center mt-8 text-xs text-gray-500">
             <p>A modern task management SOFTWARE!</p>
+            <div className="mt-3">
+              <a 
+                href="https://github.com/risenfromashes/cse408-devops-demo-project.git" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block text-gray-600 hover:text-blue-500 transition-colors"
+                aria-label="GitHub Repository"
+              >
+                <FaGithub size={24} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
